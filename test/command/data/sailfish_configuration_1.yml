@@ -1,0 +1,17 @@
+suites:
+
+  default:
+    image: python@2.7
+    services: ["postgres", "redis"]
+    command: "nose2"
+    provision:
+      - apt-get install -y libpq-dev
+      - pip install netaddr pyyaml Flask
+      - pip install psycopg2 pycrypto requests schematics
+    xunit:
+      - nosetests.xml
+    hosts:
+      - custom.gitlab=199.199.199.199
+      - custom.registry=199.199.199.198
+
+

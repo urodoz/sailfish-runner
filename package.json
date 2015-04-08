@@ -1,0 +1,61 @@
+{
+  "name": "sailfish-ci-runner",
+  "description": "Simple CI Application - Runner",
+  "version": "0.0.0",
+  "author": "Albert Lacarta <urodoz@gmail.com>",
+  "dependencies": {
+    "async": "^0.9.0",
+    "body-parser": "^1.12.2",
+    "bunyan": "^1.3.4",
+    "exectimer": "^1.0.1",
+    "express": "^4.12.3",
+    "forever": "^0.14.1",
+    "forever-monitor": "^1.5.2",
+    "fs-extra": "^0.17.0",
+    "glob": "^5.0.3",
+    "jsonfile": "^2.0.0",
+    "minimist": "^1.1.1",
+    "mkdirp": "^0.5.0",
+    "moment": "^2.9.0",
+    "mustache": "^2.0.0",
+    "node-uuid": "^1.4.3",
+    "nodegit": "^0.3.3",
+    "randomstring": "^1.0.3",
+    "request": "^2.54.0",
+    "ring": "^2.0.1",
+    "sleep": "^2.0.0",
+    "slug": "^0.8.0",
+    "sqlite3": "^3.0.5",
+    "string": "^3.1.1",
+    "tosource": "^0.1.3",
+    "underscore": "^1.8.2",
+    "validator": "^3.36.0",
+    "worker-farm": "^1.2.0",
+    "xml2js": "^0.4.6",
+    "yamljs": "^0.2.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.1",
+    "sinon": "^1.14.1",
+    "supertest": "^0.15.0"
+  },
+  "keywords": [
+    "continuous integration",
+    "testing",
+    "ci",
+    "cd",
+    "ci runner",
+    "runner"
+  ],
+  "config": {},
+  "main": "run",
+  "scripts": {
+    "test": "NODE_PATH=$NODE_PATH:./lib mocha --recursive test",
+    "run": "NODE_PATH=$NODE_PATH:./lib node run.js | ./node_modules/.bin/bunyan",
+    "forever": "NODE_PATH=$NODE_PATH:./lib ./node_modules/.bin/forever start run.js",
+    "stop_forever": "NODE_PATH=$NODE_PATH:./lib ./node_modules/.bin/forever stop run.js"
+  },
+  "engines": {
+    "node": ">= 0.10.36"
+  }
+}

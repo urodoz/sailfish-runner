@@ -1,0 +1,5 @@
+{
+  "provision": ["ps aux"],
+  "commands": ["ls -lah /tmp"],
+  "beforeClose": ["whoami"]
+}
