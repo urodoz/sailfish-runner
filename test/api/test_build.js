@@ -29,9 +29,8 @@ describe("api build", function() {
         }
 
         request(app_test)
-            .get('/build?json='+JSON.stringify(json))
-            .expect('Content-Type', /json/)
-            .expect(200)
+            .post('/build')
+            .send(json)
             .end(function(err, res){
 
                 if (err) throw err;
@@ -71,9 +70,8 @@ describe("api build", function() {
         };
 
         request(app_test)
-            .get('/build?json='+JSON.stringify(json))
-            .expect('Content-Type', /json/)
-            .expect(200)
+            .post('/build')
+            .send(json)
             .end(function(err, res){
 
                 if (err) throw err;
