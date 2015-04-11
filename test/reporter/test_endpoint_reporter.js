@@ -2,7 +2,6 @@ var assert = require("assert");
 var test_object = require('./../../test_run.js');
 var app_test = test_object[0];
 var container = test_object[1];
-var _ = require("underscore");
 var sinon = require("sinon");
 var uuid = require("node-uuid");
 
@@ -19,7 +18,7 @@ describe("endpoint reporter", function() {
 
         var foundServerReporter = false;
 
-        _.each(pluginsLoaded, function(plugin) {
+        pluginsLoaded.forEach(function(plugin) {
             if(plugin.__$PLUGIN=="server_reporter") foundServerReporter = true;
         });
 

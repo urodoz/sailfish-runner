@@ -14,6 +14,7 @@ WORKDIR /workspace
 #Git parsing
 RUN mkdir -p /opt/git-parsing
 ADD node_modules /opt/git-parsing/node_modules
+ADD reader.js /opt/git-parsing/reader.js
 ADD parse_branches.js /opt/git-parsing/parse_branches.js
 ADD parse_commits.js /opt/git-parsing/parse_commits.js
 

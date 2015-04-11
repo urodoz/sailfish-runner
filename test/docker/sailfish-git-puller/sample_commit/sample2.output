@@ -1,0 +1,9 @@
+commit a2809d42eb08d03ab704f80b38d68b03585f5a2a
+build and git-info actions from GET to POST to avoi issues on SSH key parameters
+
+commit 53248e90ad30bb731e30290702d5a526387c729d
+Added support for all Git string formats on Seek server method for pull repository command
+
+commit dc0500af685660880aba01cf3f5e352afa6e8219
+Initial commit with first working runner
+
