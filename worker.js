@@ -4,9 +4,8 @@
  */
 var _ = require("underscore");
 var configuration = require('./configuration.js');
-var configurationWorker = require('./configuration_worker.js');
 var containerFactory = require('sailfish/container_factory');
-var container = new containerFactory(_.extend(configuration, configurationWorker));
+var container = new containerFactory(_.extend(configuration, {isWorker: true}));
 container.init();
 
 var uuid = require('node-uuid');
