@@ -9,8 +9,6 @@
     "bunyan": "^1.3.4",
     "exectimer": "^1.0.1",
     "express": "^4.12.3",
-    "forever": "^0.14.1",
-    "forever-monitor": "^1.5.2",
     "fs-extra": "^0.17.0",
     "glob": "^5.0.3",
     "jsonfile": "^2.0.0",
@@ -52,8 +50,10 @@
   "scripts": {
     "test": "NODE_PATH=$NODE_PATH:./lib mocha --recursive test",
     "run": "NODE_PATH=$NODE_PATH:./lib node run.js | ./node_modules/.bin/bunyan",
-    "forever": "NODE_PATH=$NODE_PATH:./lib ./node_modules/.bin/forever start run.js",
-    "stop_forever": "NODE_PATH=$NODE_PATH:./lib ./node_modules/.bin/forever stop run.js"
+    "pm2_start": "NODE_PATH=$NODE_PATH:./lib pm2 start run.js",
+    "pm2_stop": "NODE_PATH=$NODE_PATH:./lib pm2 stop run.js",
+    "pm2_delete": "NODE_PATH=$NODE_PATH:./lib pm2 delete run.js",
+    "pm2_restart": "NODE_PATH=$NODE_PATH:./lib pm2 restart run.js"
   },
   "engines": {
     "node": ">= 0.10.36"
