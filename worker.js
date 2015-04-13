@@ -11,20 +11,15 @@ container.init();
 var uuid = require('node-uuid');
 var workerToken = uuid.v4();
 
+var pingAction = require("sailfish/worker/ping")(workerToken, container);
+var buildAction = require("sailfish/worker/build")(workerToken, container);
+
 module.exports = {
-    ping: function (inp, callback) {
-        container.get("logger").info("[worker] Ping action received on worker["+container.getParameter("token")+"] from host: ");
-        callback(workerToken);
+    ping: function (parentToken, callback) {
+        pingAction.run(parentToken, callback);
     },
 
     build: function(buildConfiguration, callback) {
-        container.get("logger").info("[worker] Build action received on worker["+container.getParameter("token")+"] form host");
-        var builder = require("sailfish/builder/builder")(container, buildConfiguration);
-
-        builder.prepare(function() {
-            builder.run(function(finalReport) {
-                callback(finalReport);
-            });
-        });
+        buildAction.run(buildConfiguration, callback);
     }
 }

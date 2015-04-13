@@ -30,3 +30,11 @@ var server = app.listen(container.getParameter("port"), function () {
     var port = server.address().port
     container.get("logger").info('Runner listening at http://'+host+':'+port)
 });
+
+/*
+ * Add Socket IO - if server is defined, try to reconnect
+ */
+var socketIOClient = require("sailfish/socket.io/client");
+container.set("socket.io", new socketIOClient(app, server, container));
+container.get("socket.io").connect();
+
