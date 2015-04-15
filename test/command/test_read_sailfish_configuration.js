@@ -1,13 +1,9 @@
-var assert = require("assert");
-var fs = require('fs');
-var sinon = require("sinon");
-var _ = require("underscore");
-
-var test_object = require('./../../test_run.js');
-var app_test = test_object[0];
-var container = test_object[1];
-
-var readSailfishConfigurationClass = require("sailfish/command/read_sailfish_configuration");
+var assert = require("assert"),
+    fs = require('fs'),
+    sinon = require("sinon"),
+    _ = require("lodash"),
+    container = require('./../../test_run.js'),
+    readSailfishConfigurationClass = require("sailfish/command/read_sailfish_configuration");
 
 /**
  * @code
@@ -21,7 +17,7 @@ describe("command read sailfish configuration", function() {
         var reader = new readSailfishConfigurationClass(container);
 
         //Stub the getFilePath to return the test file 1
-        var stubGetFilePath = sinon.stub(reader, "_getSailfishFilePath");
+        var stubGetFilePath = sinon.stub(reader, "getSailfishFilePath");
         stubGetFilePath.onCall(0).returns(__dirname+"/data/sailfish_configuration_1.yml");
 
         reader.run("1234", function(resultObject) {
@@ -37,7 +33,7 @@ describe("command read sailfish configuration", function() {
             assert.ok(_.has(package["containers"], "postgres"));
             assert.ok(_.has(package["containers"], "redis"));
 
-            reader._getSailfishFilePath.restore();
+            reader.getSailfishFilePath.restore();
             done();
         });
 

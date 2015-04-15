@@ -1,7 +1,5 @@
 module.exports = {
 
-    VERSION: "latest-test",
-
     workspace_root: "/tmp/workspace",
 
     //Logger

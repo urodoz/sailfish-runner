@@ -1,13 +1,10 @@
-var assert = require("assert");
-var randomstring = require("randomstring");
-var test_object = require('./../../test_run.js');
-var app_test = test_object[0];
-var container = test_object[1];
-var S = require("string");
-
-var sys = require('sys');
-var exec = require('child_process').exec;
-var _ = require("underscore");
+var assert = require("assert"),
+    uuid = require("node-uuid"),
+    container = require('./../../test_run.js'),
+    S = require("string"),
+    sys = require('sys'),
+    exec = require('child_process').exec,
+    _ = require("lodash");
 
 /**
  * @code
@@ -20,7 +17,7 @@ describe("builder python", function() {
 
         this.timeout(30000);
 
-        var buildId = randomstring.generate(12);
+        var buildId = uuid.v4();
         var buildConfiguration = {
             "repository": "ssh://root@172.17.42.1:13522/repository/python27",
             "commit": "3867193f5341c15c384169d871d06c92679bb2a7",
@@ -65,7 +62,7 @@ describe("builder python", function() {
 
         this.timeout(30000);
 
-        var buildId = randomstring.generate(12);
+        var buildId = uuid.v4();
         var buildConfiguration = {
             "repository": "ssh://root@172.17.42.1:13522/repository/python27",
             "commit": "a65db9b3d737bf2d62ab9bae50a18a33781976ed",
@@ -105,7 +102,7 @@ describe("builder python", function() {
 
         this.timeout(35000);
 
-        var buildId = randomstring.generate(12);
+        var buildId = uuid.v4();
         var buildConfiguration = {
             "repository": "ssh://root@172.17.42.1:13522/repository/pythonRedis",
             "commit": "66a540d7aaa60f4ec0b1a5b0f59f1c21f4e463cc",

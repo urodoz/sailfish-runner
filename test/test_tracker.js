@@ -2,8 +2,8 @@ var assert = require("assert");
 var currentDir = __dirname;
 var sys = require('sys');
 var exec = require('child_process').exec;
-var randomstring = require("randomstring");
-var _ = require("underscore");
+var uuid = require("node-uuid");
+var _ = require("lodash");
 
 /**
  * @code
@@ -14,7 +14,7 @@ describe("tracker", function() {
 
     it('input set 1', function(done) {
 
-        var randomOutput = "/tmp/"+randomstring.generate(7)+".json";
+        var randomOutput = "/tmp/"+uuid.v4()+".json";
         var inputFile = currentDir+"/sets/tracker/input_set_1.json";
         var child = exec('node '+currentDir+'/../tracker.js --input='+inputFile+' --output='+randomOutput+' ', function(error, stdout, stderr) {
             if (error !== null) {

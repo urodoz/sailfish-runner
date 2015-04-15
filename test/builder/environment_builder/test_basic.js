@@ -1,16 +1,19 @@
 var assert = require("assert");
-var randomstring = require("randomstring");
-var test_object = require('./../../../test_run.js');
-var app_test = test_object[0];
-var container = test_object[1];
+var uuid = require("node-uuid");
+var container = require('./../../../test_run.js');
 
 var sys = require('sys');
 var exec = require('child_process').exec;
 var S = require("string");
-var _ = require("underscore");
+var _ = require("lodash");
 
 var environmentBuilderClass = require("sailfish/builder/environment_builder");
 
+/**
+ * @code
+ * NODE_PATH=$NODE_PATH:./lib node_modules/.bin/mocha --recursive test/builder/environment_builder/test_basic.js
+ * @endcode
+ */
 describe("environment builder", function() {
 
     it("Simple python project + redis", function(done){
@@ -31,7 +34,7 @@ describe("environment builder", function() {
                 }
             }
         };
-        var buildId = randomstring.generate(12);
+        var buildId = uuid.v4();
         var buildConfiguration = {
             "repository": "ssh://root@172.17.42.1:13522/repository/python27",
             "commit": "a65db9b3d737bf2d62ab9bae50a18a33781976ed",
@@ -45,9 +48,6 @@ describe("environment builder", function() {
 
             //The 2 containers should be running
             var child = exec("docker ps |grep "+buildId, function(error, stdout, stderr) {
-                if (error !== null) {
-                    self.container.get("logger").info(error);
-                }
 
                 assert.ok(S(stdout).contains(buildId+"_default_redis"));
                 assert.ok(S(stdout).contains("sailfish-python:2.7"));
@@ -61,7 +61,7 @@ describe("environment builder", function() {
                     //Kill it
                     environmentBuilder.kill(function() {
 
-                        var child = exec("docker ps |grep "+buildId+"_default", function(error, stdout, stderr) {
+                        exec("docker ps |grep "+buildId+"_default", function(error, stdout, stderr) {
                             assert.ok(!S(stdout).contains(buildId));
                             done();
                         });

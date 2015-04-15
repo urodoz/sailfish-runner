@@ -1,15 +1,10 @@
-var assert = require("assert");
-var sinon = require("sinon");
-var randomstring = require("randomstring");
-var fs = require('fs');
-var uuid = require('node-uuid');
-var _ = require("underscore");
-
-var test_object = require('./../../test_run.js');
-var app_test = test_object[0];
-var container = test_object[1];
-
-var pullRepositoryCodeClass = require("sailfish/command/pull_repository_code");
+var assert = require("assert"),
+    sinon = require("sinon"),
+    fs = require('fs'),
+    uuid = require('node-uuid'),
+    _ = require("lodash"),
+    container = require('./../../test_run.js'),
+    pullRepositoryCodeClass = require("sailfish/command/pull_repository_code");
 
 /**
  * @code
@@ -27,7 +22,7 @@ describe("command pull repository code", function() {
         });
 
         it('Should parse > ssh://root@127.0.0.1:13400/testRepo', function(done) {
-            var parsedData = pullRepositoryCode._seekServer("ssh://root@127.0.0.1:13400/testRepo");
+            var parsedData = pullRepositoryCode.seekServer("ssh://root@127.0.0.1:13400/testRepo");
 
             assert.ok(_.isObject(parsedData));
             assert.ok(_.has(parsedData, "host"));
@@ -40,7 +35,7 @@ describe("command pull repository code", function() {
         });
 
         it('Should parse > ssh://user@server.local/project.git', function(done) {
-            var parsedData = pullRepositoryCode._seekServer("ssh://user@server.local/project.git");
+            var parsedData = pullRepositoryCode.seekServer("ssh://user@server.local/project.git");
 
             assert.ok(_.isObject(parsedData));
             assert.ok(_.has(parsedData, "host"));
@@ -52,7 +47,7 @@ describe("command pull repository code", function() {
         });
 
         it('Should parse > ssh://user@127.0.0.1/project.git', function(done) {
-            var parsedData = pullRepositoryCode._seekServer("ssh://user@127.0.0.1/project.git");
+            var parsedData = pullRepositoryCode.seekServer("ssh://user@127.0.0.1/project.git");
 
             assert.ok(_.isObject(parsedData));
             assert.ok(_.has(parsedData, "host"));
@@ -64,7 +59,7 @@ describe("command pull repository code", function() {
         });
 
         it('Should parse > git@github.com:urodoz/sailfish-test-repository.git', function(done) {
-            var parsedData = pullRepositoryCode._seekServer("git@github.com:urodoz/sailfish-test-repository.git");
+            var parsedData = pullRepositoryCode.seekServer("git@github.com:urodoz/sailfish-test-repository.git");
 
             assert.ok(_.isObject(parsedData));
             assert.ok(_.has(parsedData, "host"));
@@ -76,7 +71,7 @@ describe("command pull repository code", function() {
         });
 
         it('Should parse > https://example.com/gitproject.git', function(done) {
-            var parsedData = pullRepositoryCode._seekServer("https://example.com/gitproject.git");
+            var parsedData = pullRepositoryCode.seekServer("https://example.com/gitproject.git");
 
             assert.ok(_.isObject(parsedData));
             assert.ok(_.has(parsedData, "host"));
@@ -88,7 +83,7 @@ describe("command pull repository code", function() {
         });
 
         it('Should parse > http://example.com/gitproject.git', function(done) {
-            var parsedData = pullRepositoryCode._seekServer("http://example.com/gitproject.git");
+            var parsedData = pullRepositoryCode.seekServer("http://example.com/gitproject.git");
 
             assert.ok(_.isObject(parsedData));
             assert.ok(_.has(parsedData, "host"));
@@ -100,7 +95,7 @@ describe("command pull repository code", function() {
         });
 
         it('Should parse > http://example2.es:12345/gitproject.git', function(done) {
-            var parsedData = pullRepositoryCode._seekServer("http://example2.es:12345/gitproject.git");
+            var parsedData = pullRepositoryCode.seekServer("http://example2.es:12345/gitproject.git");
 
             assert.ok(_.isObject(parsedData));
             assert.ok(_.has(parsedData, "host"));

@@ -1,13 +1,10 @@
-var assert = require("assert");
-var randomstring = require("randomstring");
-var test_object = require('./../../test_run.js');
-var app_test = test_object[0];
-var container = test_object[1];
-var S = require("string");
-
-var sys = require('sys');
-var exec = require('child_process').exec;
-var _ = require("underscore");
+var assert = require("assert"),
+    uuid = require("node-uuid"),
+    container = require('./../../test_run.js'),
+    S = require("string"),
+    sys = require('sys'),
+    exec = require('child_process').exec,
+    _ = require("lodash");
 
 /**
  * @code
@@ -20,7 +17,7 @@ describe("builder node", function() {
 
         this.timeout(30000);
 
-        var buildId = randomstring.generate(12);
+        var buildId = uuid.v4();
         var buildConfiguration = {
             "repository": "ssh://root@172.17.42.1:13522/repository/node1037",
             "commit": "33958b5719b23da9f03435b67d684a5fe7f5fece",

@@ -1,11 +1,7 @@
-var assert = require("assert");
-var sinon = require("sinon");
-
-var test_object = require('./../../../test_run.js');
-var app_test = test_object[0];
-var container = test_object[1];
-
-var configurationParserClass = require("sailfish/command/parser/configuration_parser");
+var assert = require("assert"),
+    sinon = require("sinon"),
+    container = require('./../../../test_run.js'),
+    configurationParserClass = require("sailfish/command/parser/configuration_parser");
 
 /**
  * @code
@@ -38,7 +34,7 @@ describe("configuration_parser pack command", function() {
                 }
             },
             _type: "Sailfish runner configuration",
-            _version: "latest-test"
+            _version: container.getParameter("VERSION")
         });
 
         done();
@@ -67,7 +63,7 @@ describe("configuration_parser pack command", function() {
                 }
             },
             _type: "Sailfish runner configuration",
-            _version: "latest-test"
+            _version: container.getParameter("VERSION")
         });
 
         done();

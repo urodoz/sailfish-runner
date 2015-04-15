@@ -8,7 +8,7 @@
  * --input={inputFilename} Array of string commands
  * --output={outputFilename} String which the result of all the scripts will be stored
  */
-var _ = require("underscore");
+var _ = require("lodash");
 var async = require("async");
 var sys = require('sys');
 var exec = require('child_process').exec;
@@ -39,7 +39,7 @@ if(!_.isArray(inputJSON["beforeClose"])) throw Error("Input JSON.beforeClose is 
 //Generating the array of commands to execute as serial
 var commandArray = [];
 
-_.each(["provision", "commands", "beforeClose"], function(phase) {
+["provision", "commands", "beforeClose"].forEach(function(phase) {
     _.each(inputJSON[phase], function(commandToExecute) {
         commandArray.push(function(callback){
 

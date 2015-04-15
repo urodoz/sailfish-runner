@@ -5,6 +5,7 @@ module.exports = {
      */
     "VERSION": "0.0.1",
     "port": 13900,
+    "endpoint": "http://127.0.0.1:13800",
 
     /*
      * PATH CONFIGURATION

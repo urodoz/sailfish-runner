@@ -1,8 +1,6 @@
 var assert = require("assert");
-var test_object = require('./../test_run.js');
-var app_test = test_object[0];
-var container = test_object[1];
-var _ = require("underscore");
+var container = require('./../test_run.js');
+var _ = require("lodash");
 
 /**
  * @code
@@ -16,7 +14,6 @@ describe("container factory", function() {
         var serviceList = container.list();
 
         assert.ok(_.isArray(serviceList));
-        assert.ok(_.contains(serviceList, "logger"));
         assert.ok(_.contains(serviceList, "database"));
         assert.ok(_.contains(serviceList, "commander"));
         assert.ok(_.contains(serviceList, "endpoint.reporter"));

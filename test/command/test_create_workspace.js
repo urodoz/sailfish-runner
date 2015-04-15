@@ -1,14 +1,9 @@
-var assert = require("assert");
-var sinon = require("sinon");
-var randomstring = require("randomstring");
-var fs = require('fs');
-var uuid = require('node-uuid');
-
-var test_object = require('./../../test_run.js');
-var app_test = test_object[0];
-var container = test_object[1];
-
-var createWorkspaceClass = require("sailfish/command/create_workspace");
+var assert = require("assert"),
+    sinon = require("sinon"),
+    fs = require('fs'),
+    uuid = require('node-uuid'),
+    container = require('./../../test_run.js'),
+    createWorkspaceClass = require("sailfish/command/create_workspace");
 
 /**
  * @code
@@ -21,7 +16,7 @@ describe("command create_workspace", function() {
 
         //Stub the get parameter
         var stubGetParameter = sinon.stub(container, "getParameter");
-        var randomDir = "/tmp/"+randomstring.generate(8);
+        var randomDir = "/tmp/"+uuid.v4();
         stubGetParameter.onCall(0).returns(randomDir);
         var randomBuildId = uuid.v4();
 

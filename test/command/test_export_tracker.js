@@ -1,13 +1,9 @@
-var assert = require("assert");
-var sinon = require("sinon");
-var randomstring = require("randomstring");
-var fs = require('fs-extra');
-
-var test_object = require('./../../test_run.js');
-var app_test = test_object[0];
-var container = test_object[1];
-
-var exportTrackerClass = require("sailfish/command/export_tracker");
+var assert = require("assert"),
+    sinon = require("sinon"),
+    uuid = require("node-uuid"),
+    fs = require('fs-extra'),
+    container = require('./../../test_run.js'),
+    exportTrackerClass = require("sailfish/command/export_tracker");
 
 /**
  * @code
@@ -20,17 +16,17 @@ describe("command export_tracker", function() {
 
         //Stub the get parameter
         var exportTracker = new exportTrackerClass(container);
-        var randomDirName = randomstring.generate(7);
+        var randomDirName = uuid.v4();
         var fullWorkspacePath = "/tmp/"+randomDirName+"/frame"
 
         fs.ensureDir(fullWorkspacePath, function(err,result) {
 
-            var stubProjectRoot = sinon.stub(exportTracker, "_getProjectRoot");
+            var stubProjectRoot = sinon.stub(exportTracker, "getProjectRoot");
             stubProjectRoot.onCall(0).returns(fullWorkspacePath);
 
             exportTracker.export(randomDirName, function() {
 
-                stats = fs.lstatSync(fullWorkspacePath);
+                var stats = fs.lstatSync(fullWorkspacePath);
                 assert.ok(stats.isDirectory());
 
                 stats = fs.lstatSync(fullWorkspacePath+"/node_modules");
@@ -42,7 +38,7 @@ describe("command export_tracker", function() {
                 stats = fs.lstatSync(fullWorkspacePath+"/node_modules/minimist");
                 assert.ok(stats.isDirectory());
 
-                stats = fs.lstatSync(fullWorkspacePath+"/node_modules/underscore");
+                stats = fs.lstatSync(fullWorkspacePath+"/node_modules/lodash");
                 assert.ok(stats.isDirectory());
 
                 stats = fs.lstatSync(fullWorkspacePath+"/node_modules/jsonfile");
@@ -52,7 +48,7 @@ describe("command export_tracker", function() {
                 fs.exists(fullWorkspacePath+"/tracker.js", function(exists) {
 
                     assert.ok(exists);
-                    exportTracker._getProjectRoot.restore();
+                    exportTracker.getProjectRoot.restore();
                     done();
 
                 });
