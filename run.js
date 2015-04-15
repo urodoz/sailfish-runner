@@ -33,14 +33,10 @@ var configuration = require("sailfish/configuration/reader")(configurationFromFi
          *
          * The workers are created to run all git/build/docker actions
          */
-        container.get("logger").info("Starting worker farm...");
-        workers = workerFarm(require.resolve('./worker'), [
-            'ping', "build"
-        ]);
+        var workers = workerFarm(require.resolve('./worker'), ['ping', "build"]);
         workers.ping(container.getParameter("token"), function(token) {
-            container.get("logger").info("Received ping response from worker: "+token);
+            //Received PING
         });
-        container.get("logger").info("Add workers to container");
         container.set("workers", workers);
 
         /*
@@ -49,6 +45,9 @@ var configuration = require("sailfish/configuration/reader")(configurationFromFi
          * The runner has status monitor accessible by web. This socket.IO server
          * does all the job with the UI Status Monitor
          */
+        var socketIOServer = require("sailfish/socket.io/server");
+        container.set("io.server", new socketIOServer(container));
+        container.get("io.server").serve();
 
         /*
          * Add Socket IO Client - if server is defined, try to reconnect
@@ -56,8 +55,8 @@ var configuration = require("sailfish/configuration/reader")(configurationFromFi
          * The runner is also connected with the server
          */
         var socketIOClient = require("sailfish/socket.io/client");
-        container.set("socket.io.client", new socketIOClient(app, server, container));
-        container.get("socket.io.client").connect();
+        container.set("io.client", new socketIOClient(container));
+        container.get("io.client").connect();
     }
 
 });
