@@ -2,6 +2,6 @@
 <script>
     var socket = io('http://127.0.0.1:13900/');
     socket.on('status', function (data) {
-
+        console.log(data);
     });
 </script>
