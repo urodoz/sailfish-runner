@@ -20,17 +20,33 @@
         <link rel="import" href="/bower_components/polymer/polymer.html">
         <link rel="import" href="/bower_components/font-roboto/roboto.html">
         <link rel="import" href="/sf/sf-navbar/sf-navbar.html">
+        <link rel="import" href="/sf/sf-workers/sf-workers.html">
     </head>
     <body class="runner-body" unresolved>
 
-        <sf-navbar id="statusNavigation" title="Sailfish Runner"></sf-navbar>
+        <sf-navbar id="statusNavigation" barTitle="Sailfish Runner"></sf-navbar>
 
+        <div class="container">
+            <div class="row">
+
+                <!-- SIDEBAR -->
+                <div class="col s3">
+                    <sf-workers id="workerContainer"></sf-workers>
+                </div>
+
+                <!-- CONTENT -->
+                <div class="col s9">
+                </div>
+
+            </div>
+        </div>
 
         <script>
             var socket = io('http://127.0.0.1:13900/');
             socket.on('status', function (data) {
 
                 document.querySelector("#statusNavigation").statusReport = data;
+                document.querySelector("#workerContainer").statusReport = data;
 
             });
         </script>

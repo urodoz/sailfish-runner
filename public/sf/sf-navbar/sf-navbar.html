@@ -2,7 +2,7 @@
 <link rel="import" href="/../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="/../../bower_components/paper-button/paper-button.html">
 
-<polymer-element name="sf-navbar" attributes="statusReport title">
+<polymer-element name="sf-navbar" attributes="statusReport barTitle">
 
     <template>
 
@@ -11,7 +11,7 @@
         <div id="navbar-runner" class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper">
-                    <a href="#" class="brand-logo">{{title}}</a>
+                    <a href="#" class="brand-logo">{{barTitle}}</a>
                     <div class="right hide-on-med-and-down">
                         <paper-button>
                             <core-icon icon="{{lockIcon}}"></core-icon> {{lockText}}
@@ -20,7 +20,6 @@
                         <paper-button>
                             <core-icon icon="{{linkIcon}}"></core-icon> {{linkText}}
                         </paper-button>
-
                     </div>
             </nav>
         </div>
@@ -30,7 +29,7 @@
 
       Polymer('sf-navbar', {
 
-          title: null,
+          barTitle: null,
           statusReport: null,
 
           //Lock
@@ -58,7 +57,6 @@
                   this.linkIcon = "cloud-done";
                   this.linkText = "Connected";
               }
-
           }
 
       });

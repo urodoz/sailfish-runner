@@ -1,0 +1,52 @@
+
+<polymer-element name="sf-workers" attributes="statusReport workers">
+
+    <template>
+
+        <link rel="stylesheet" href="/../../bower_components/materialize/dist/css/materialize.min.css">
+
+        <template repeat="{{ worker in workers }}">
+
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <div class="card-panel teal">
+                        <span class="white-text">{{worker.name}}</span>
+                        <br>
+                        Worker {{worker.status}}
+                    </div>
+                </div>
+            </div>
+
+        </template>
+
+
+    </template>
+    <script>
+
+      Polymer('sf-workers', {
+
+          statusReport: null,
+          workers: [],
+
+          statusReportChanged: function() {
+
+              console.log(this.statusReport);
+
+              var workerStatus = this.statusReport.workerStatus;
+              var workerNames = _.keys(workerStatus);
+              var workers = [];
+              _.each(workerNames, function(workerName) {
+                  workers.push({
+                      name: workerName,
+                      status: (workerStatus[workerName].locked) ? "locked" : "ready"
+                  });
+              });
+
+
+              this.workers = workers;
+          }
+
+      });
+
+    </script>
+</polymer-element>
