@@ -1,13 +1,11 @@
-var assert = require("assert");
-var uuid = require("node-uuid");
-var container = require('./../../../test_run.js');
-
-var sys = require('sys');
-var exec = require('child_process').exec;
-var S = require("string");
-var _ = require("lodash");
-
-var environmentBuilderClass = require("sailfish/builder/environment_builder");
+var assert = require("assert"),
+    uuid = require("node-uuid"),
+    container = require('./../../../test_run.js'),
+    sys = require('sys'),
+    exec = require('child_process').exec,
+    S = require("string"),
+    _ = require("lodash"),
+    environmentBuilderClass = require("sailfish/builder/environment_builder");
 
 /**
  * @code

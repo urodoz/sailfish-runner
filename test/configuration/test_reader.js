@@ -1,8 +1,8 @@
-var assert = require("assert");
-var configurationObject = require('./../../configuration.js');
-var configurationTestObject = require('./../../configuration_test.js');
-var configurationReader = require('sailfish/configuration/reader');
-var _ = require("lodash");
+var assert = require("assert"),
+    configurationObject = require('./../../configuration.js'),
+    configurationTestObject = require('./../../configuration_test.js'),
+    configurationReader = require('sailfish/configuration/reader'),
+    _ = require("lodash");
 
 /**
  * @code

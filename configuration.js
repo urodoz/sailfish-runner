@@ -12,7 +12,6 @@ module.exports = {
      */
     "app_root": __dirname,
     "workspace_root": "/tmp/workspace",
-    "database": __dirname+"/store.database",
 
     /*
      * PLUGIN CONFIGURATION

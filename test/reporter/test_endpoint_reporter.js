@@ -1,7 +1,7 @@
-var assert = require("assert");
-var container = require('./../../test_run.js');
-var sinon = require("sinon");
-var uuid = require("node-uuid");
+var assert = require("assert"),
+    container = require('./../../test_run.js'),
+    sinon = require("sinon"),
+    uuid = require("node-uuid");
 
 /**
  * @code

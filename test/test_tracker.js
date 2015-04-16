@@ -1,9 +1,9 @@
-var assert = require("assert");
-var currentDir = __dirname;
-var sys = require('sys');
-var exec = require('child_process').exec;
-var uuid = require("node-uuid");
-var _ = require("lodash");
+var assert = require("assert"),
+    currentDir = __dirname,
+    sys = require('sys'),
+    exec = require('child_process').exec,
+    uuid = require("node-uuid"),
+    _ = require("lodash");
 
 /**
  * @code

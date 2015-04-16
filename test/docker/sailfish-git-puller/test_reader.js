@@ -1,7 +1,7 @@
-var reader = require('./../../../docker/sailfish-git-puller/reader.js');
-var fs = require("fs-extra");
-var assert = require("assert");
-var _ = require("lodash");
+var reader = require('./../../../docker/sailfish-git-puller/reader.js'),
+    fs = require("fs-extra"),
+    assert = require("assert"),
+    _ = require("lodash");
 
 /**
  * @code
