@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Sailfish CI Runner</title>
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="/bower_components/materialize/dist/css/materialize.min.css">
+        <link rel="stylesheet" href="/css/runner.css">
+
+        <!-- JS -->
+        <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="/bower_components/materialize/dist/js/materialize.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/bower_components/lodash/lodash.min.js"></script>
+        <script src="/bower_components/webcomponentsjs/webcomponents.min.js">
+        </script>
+
+        <!-- HTML IMPORTS -->
+        <link rel="import" href="/bower_components/polymer/polymer.html">
+        <link rel="import" href="/bower_components/font-roboto/roboto.html">
+        <link rel="import" href="/sf/sf-navbar/sf-navbar.html">
+    </head>
+    <body class="runner-body" unresolved>
+
+        <sf-navbar id="statusNavigation" title="Sailfish Runner"></sf-navbar>
+
+
+        <script>
+            var socket = io('http://127.0.0.1:13900/');
+            socket.on('status', function (data) {
+
+                document.querySelector("#statusNavigation").statusReport = data;
+
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,67 @@
+
+<link rel="import" href="/../../bower_components/core-icons/core-icons.html">
+<link rel="import" href="/../../bower_components/paper-button/paper-button.html">
+
+<polymer-element name="sf-navbar" attributes="statusReport title">
+
+    <template>
+
+        <link rel="stylesheet" href="/../../bower_components/materialize/dist/css/materialize.min.css">
+
+        <div id="navbar-runner" class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper">
+                    <a href="#" class="brand-logo">{{title}}</a>
+                    <div class="right hide-on-med-and-down">
+                        <paper-button>
+                            <core-icon icon="{{lockIcon}}"></core-icon> {{lockText}}
+                        </paper-button>
+
+                        <paper-button>
+                            <core-icon icon="{{linkIcon}}"></core-icon> {{linkText}}
+                        </paper-button>
+
+                    </div>
+            </nav>
+        </div>
+
+    </template>
+    <script>
+
+      Polymer('sf-navbar', {
+
+          title: null,
+          statusReport: null,
+
+          //Lock
+          lockIcon: "lock-open",
+          lockText: "Not locked",
+
+          linkIcon: "cloud",
+          linkText: "Disconnected",
+
+          statusReportChanged: function() {
+              //Lock information
+              if(this.statusReport.locked) {
+                  this.lockIcon = "lock";
+                  this.lockText = "Locked";
+              } else {
+                  this.lockIcon = "lock-open"
+                  this.lockText = "Not locked";
+              }
+
+              //Server link
+              if(this.statusReport.serverLink=="broken") {
+                  this.linkIcon = "cloud";
+                  this.linkText = "Disconnected";
+              } else {
+                  this.linkIcon = "cloud-done";
+                  this.linkText = "Connected";
+              }
+
+          }
+
+      });
+
+    </script>
+</polymer-element>
