@@ -8,23 +8,25 @@
  * --input={inputFilename} Array of string commands
  * --output={outputFilename} String which the result of all the scripts will be stored
  */
-var _ = require("lodash");
-var async = require("async");
-var sys = require('sys');
-var exec = require('child_process').exec;
-var jf = require('jsonfile');
-var argv = require('minimist')(process.argv.slice(2));
-var uuid = require("node-uuid");
-var t = require('exectimer');
+var _ = require("lodash"),
+    async = require("async"),
+    sys = require('sys'),
+    exec = require('child_process').exec,
+    jf = require('jsonfile'),
+    argv = require('minimist')(process.argv.slice(2)),
+    uuid = require("node-uuid"),
+    t = require('exectimer');
 
 if(!_.has(argv, "input") || !_.has(argv, "output")) {
     console.log("input and/or output argument does not exist");
     throw Error("Argument error");
 }
 
-var input = argv["input"];
-var output = argv["output"];
-var inputJSON = require(input);
+var input = argv["input"],
+    output = argv["output"],
+    outputLog = output+".log",
+    outputLogJson = [],
+    inputJSON = require(input);
 
 //Checking structure
 if(!_.has(inputJSON, "provision") || !_.has(inputJSON, "commands") || !_.has(inputJSON, "beforeClose")) {
@@ -49,6 +51,14 @@ var commandArray = [];
             tick.start();
 
             var child = exec(commandToExecute, function(error, stdout, stderr) {
+
+                //Output to log archive
+                outputLogJson.push({
+                    stdout: stdout,
+                    stderr: stderr
+                });
+                //Flush to archive
+                jf.writeFileSync(outputLog, outputLogJson);
 
                 var encoded_stdout = null;
 
