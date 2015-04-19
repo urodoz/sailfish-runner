@@ -18,6 +18,8 @@ then
     cd /opt/git-parsing && node parse_branches.js
     cd /opt/git-parsing && git init && git remote add origin $SAILFISH_REPOSITORY && git fetch origin
     cd /opt/git-parsing && node parse_commits.js
+    #Copy the raw output to workspace
+    cp /opt/git-parsing/sailfish_branches.output /workspace/sailfish_branches.output
 fi
 
 if [ "$SAILFISH_TYPE" == "default" ]
