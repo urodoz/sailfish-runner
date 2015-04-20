@@ -47,14 +47,16 @@
   "main": "run",
   "scripts": {
     "jshint": "jshint ./lib",
-    "test": "NODE_PATH=$NODE_PATH:./lib mocha --recursive --reporter dot test",
+    "test": "NODE_PATH=$NODE_PATH:./lib mocha --recursive test",
     "run": "NODE_PATH=$NODE_PATH:./lib node run.js",
     "pm2_start": "NODE_PATH=$NODE_PATH:./lib pm2 start run.js",
     "pm2_stop": "NODE_PATH=$NODE_PATH:./lib pm2 stop run.js",
     "pm2_delete": "NODE_PATH=$NODE_PATH:./lib pm2 delete run.js",
     "pm2_restart": "NODE_PATH=$NODE_PATH:./lib pm2 restart run.js"
   },
-  "pre-commit": ["jshint"],
+  "pre-commit": [
+    "jshint"
+  ],
   "engines": {
     "node": ">= 0.10.36"
   }
