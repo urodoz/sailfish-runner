@@ -13,6 +13,10 @@ Uses docker to generate containers to test the projects sent by Sailfish CI Serv
 * NPM
 * Bower
 
+### Development dependencies
+
+* JSHint
+
 ## Installation
 
 Install the NPM dependencies and Bower dependencies
