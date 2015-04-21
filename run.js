@@ -3,7 +3,6 @@
  */
 var _ = require('lodash'),
     uuid = require("node-uuid"),
-    colors = require("colors"),
     workerFarm = require('worker-farm');
 
 /*
@@ -37,7 +36,7 @@ var configuration = require("sailfish/configuration/reader")(configurationFromFi
          */
         var workers = workerFarm(require.resolve('./worker'), ['ping', "build"]);
         workers.ping(container.getParameter("token"), function(token) {
-            console.log("Worker is listening".yellow.bold);
+            container.get("logger").info("Worker is ready");
         });
         container.set("workers", workers);
 
@@ -57,20 +56,20 @@ var configuration = require("sailfish/configuration/reader")(configurationFromFi
              * The runner has status monitor accessible by web. This socket.IO server
              * does all the job with the UI Status Monitor
              */
-            console.log("Creating socket.IO server...".cyan.bold);
             var socketIOServer = require("sailfish/socket.io/server");
             container.set("io.server", new socketIOServer(container));
             container.get("io.server").serve();
+            container.get("logger").info("Created socket.IO server");
 
             /*
              * Add Socket IO Client - if server is defined, try to reconnect
              *
              * The runner is also connected with the server
              */
-            console.log("Creating socket.IO client...".cyan.bold);
             var socketIOClient = require("sailfish/socket.io/client");
             container.set("io.client", new socketIOClient(container));
             container.get("io.client").connect();
+            container.get("logger").info("Created socket.IO client");
 
         });
 
