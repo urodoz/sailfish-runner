@@ -3,7 +3,7 @@ module.exports = {
     workspace_root: "/tmp/workspace",
 
     //Logger
-    loggers: [],
+    "log": false,
 
     //API
     port: 23900,

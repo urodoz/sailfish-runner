@@ -36,13 +36,7 @@ module.exports = {
     /*
      * LOGGING CONFIGURATION
      */
-    "loggers": [
-        {
-            name: 'sailfish-runner',
-            stream: process.stdout,
-            level: 'info'
-        }
-    ],
+    "log": true,
 
     /*
      * DOCKER IMAGES/CONFIGURATION

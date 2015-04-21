@@ -13,7 +13,7 @@ var _ = require('lodash'),
  * information.
  */
 var configurationFromFile = require('./configuration.js');
-var configuration = require("sailfish/configuration/reader")(configurationFromFile, function(err, configuration) {
+var configurationAction = require("sailfish/configuration/reader")(configurationFromFile, function(err, configuration) {
 
     if(err) {
         console.log(err);
