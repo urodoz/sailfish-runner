@@ -3,8 +3,6 @@
 /db*
 /_sailfish.lock*
 /_build_test.js
-/nedb.database
-/store.database
 /.idea
-
+npm-debug.log
 /public/bower_components

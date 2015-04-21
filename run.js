@@ -40,38 +40,26 @@ var configurationAction = require("sailfish/configuration/reader")(configuration
         });
         container.set("workers", workers);
 
-        //Create worker status objects
-        var workerStatusObject = {};
-        for(var i=0;i<parseInt(container.getParameter("workers"));i++) {
-            var newToken = uuid.v4().split("-")[0];
-            workerStatusObject[newToken] = {
-                locked: false
-            }
-        }
-        container.set("workers.status", workerStatusObject, function() {
+        /*
+         * Socket IO server - for monitor status
+         *
+         * The runner has status monitor accessible by web. This socket.IO server
+         * does all the job with the UI Status Monitor
+         */
+        var socketIOServer = require("sailfish/socket.io/server");
+        container.set("io.server", new socketIOServer(container));
+        container.get("io.server").serve();
+        container.get("logger").info("Created socket.IO server");
 
-            /*
-             * Socket IO server - for monitor status
-             *
-             * The runner has status monitor accessible by web. This socket.IO server
-             * does all the job with the UI Status Monitor
-             */
-            var socketIOServer = require("sailfish/socket.io/server");
-            container.set("io.server", new socketIOServer(container));
-            container.get("io.server").serve();
-            container.get("logger").info("Created socket.IO server");
-
-            /*
-             * Add Socket IO Client - if server is defined, try to reconnect
-             *
-             * The runner is also connected with the server
-             */
-            var socketIOClient = require("sailfish/socket.io/client");
-            container.set("io.client", new socketIOClient(container));
-            container.get("io.client").connect();
-            container.get("logger").info("Created socket.IO client");
-
-        });
+        /*
+         * Add Socket IO Client - if server is defined, try to reconnect
+         *
+         * The runner is also connected with the server
+         */
+        var socketIOClient = require("sailfish/socket.io/client");
+        container.set("io.client", new socketIOClient(container));
+        container.get("io.client").connect();
+        container.get("logger").info("Created socket.IO client");
 
     }
 
