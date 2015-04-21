@@ -28,13 +28,8 @@
         <div class="container">
             <div class="row">
 
-                <!-- SIDEBAR -->
-                <div class="col s3">
-                    <sf-workers id="workerContainer"></sf-workers>
-                </div>
+                <div class="col s12 m12">
 
-                <!-- CONTENT -->
-                <div class="col s9">
                 </div>
 
             </div>
@@ -44,6 +39,12 @@
             var socket = io('http://127.0.0.1:13900/');
             socket.on('status', function (data) {
                 document.querySelector("#statusNavigation").statusReport = data;
+            });
+            socket.on("git_pull_start", function(data) {
+                //TODO: React on git pull started
+            });
+            socket.on("git_pull_end", function(data) {
+                //TODO: React on git pull finished
             });
         </script>
     </body>
