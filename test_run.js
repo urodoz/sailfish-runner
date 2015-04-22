@@ -11,3 +11,7 @@ var container = new containerFactory(_.extend(configuration, configurationTest))
 container.init();
 
 module.exports = container;
+
+var socketIOServer = require("sailfish/socket.io/server");
+container.set("io.server", new socketIOServer(container));
+container.get("io.server").serve();

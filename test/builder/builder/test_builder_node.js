@@ -1,6 +1,6 @@
 var assert = require("assert"),
     uuid = require("node-uuid"),
-    container = require('./../../test_run.js'),
+    container = require('./../../../test_run.js'),
     S = require("string"),
     sys = require('sys'),
     exec = require('child_process').exec,
@@ -8,7 +8,7 @@ var assert = require("assert"),
 
 /**
  * @code
- * NODE_PATH=$NODE_PATH:./lib node_modules/.bin/mocha --recursive test/builder/test_builder_node.js
+ * NODE_PATH=$NODE_PATH:./lib node_modules/.bin/mocha --recursive test/builder/builder/test_builder_node.js
  * @endcode
  */
 describe("builder node", function() {
