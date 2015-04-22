@@ -1,8 +1,10 @@
-var assert = require("assert"),
+var assert = require("chai").assert,
     currentDir = __dirname,
     sys = require('sys'),
     exec = require('child_process').exec,
     uuid = require("node-uuid"),
+    fs = require("fs-extra"),
+    Mustache = require("mustache"),
     _ = require("lodash");
 
 /**
@@ -57,7 +59,35 @@ describe("tracker", function() {
             done();
         });
 
-    })
+    });
+
+    it("check output logging", function(done) {
+
+        var randomOutput = "/tmp/"+uuid.v4()+".json",
+            logFile = "/tmp/"+uuid.v4()+".log",
+            inputFile = currentDir+"/sets/tracker/input_set_2.json",
+            cmdTpl = 'node {{&trackerPath}} --input={{&inputFile}} --output={{&outputFile}} --log={{&logFile}}',
+            execCommand = Mustache.render(cmdTpl, {
+                trackerPath: currentDir+"/../tracker.js",
+                inputFile: inputFile,
+                outputFile: randomOutput,
+                logFile: logFile
+            });
+        var child = exec(execCommand, function(error, stdout, stderr) {
+
+            var bufferContent = fs.readFileSync(logFile);
+            var utf8Content = bufferContent.toString('utf-8');
+
+            var contentArray = utf8Content.split('\n');
+
+            assert.equal('provision_step', contentArray[0]);
+            assert.equal('commands_step', contentArray[1]);
+            assert.equal('beforeClose_step', contentArray[2]);
+
+            done();
+        });
+
+    });
 
 
 });

@@ -15,7 +15,6 @@ describe("container factory", function() {
 
         assert.ok(_.isArray(serviceList));
         assert.ok(_.contains(serviceList, "commander"));
-        assert.ok(_.contains(serviceList, "endpoint.reporter"));
 
         done();
     });

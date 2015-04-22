@@ -15,6 +15,7 @@ var _ = require("lodash"),
     jf = require('jsonfile'),
     argv = require('minimist')(process.argv.slice(2)),
     uuid = require("node-uuid"),
+    fs = require("fs"),
     t = require('exectimer');
 
 if(!_.has(argv, "input") || !_.has(argv, "output")) {
@@ -24,8 +25,7 @@ if(!_.has(argv, "input") || !_.has(argv, "output")) {
 
 var input = argv["input"],
     output = argv["output"],
-    outputLog = output+".log",
-    outputLogJson = [],
+    outputLog = argv["log"],
     inputJSON = require(input);
 
 //Checking structure
@@ -52,22 +52,25 @@ var commandArray = [];
 
             var child = exec(commandToExecute, function(error, stdout, stderr) {
 
-                //Output to log archive
-                outputLogJson.push({
-                    stdout: stdout,
-                    stderr: stderr
-                });
-                //Flush to archive
-                jf.writeFileSync(outputLog, outputLogJson);
-
-                var encoded_stdout = null;
+                var encoded_stdout = null,
+                    raw_stdout = null;
 
                 if(!_.isEmpty(stdout) || !_.isEmpty(stderr)) {
-                    if (!_.isEmpty(stdout)) encoded_stdout = new Buffer(stdout).toString('base64');
-                    if (!_.isEmpty(stderr)) encoded_stdout = new Buffer(stderr).toString('base64');
+                    if (!_.isEmpty(stdout)) {
+                        raw_stdout = stdout;
+                        encoded_stdout = new Buffer(stdout).toString('base64');
+                    }
+                    if (!_.isEmpty(stderr)) {
+                        raw_stdout = stderr;
+                        encoded_stdout = new Buffer(stderr).toString('base64');
+                    }
                 }
 
                 tick.stop();
+
+                //Append line to log file (raw_stdout)
+                if(!_.isEmpty(outputLog)) fs.appendFileSync(outputLog, raw_stdout);
+
                 var commandTimer = t.timers[uuidTimer];
                 var duration = (commandTimer.duration())/1000000; //To miliseconds
 

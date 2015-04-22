@@ -1,0 +1,5 @@
+{
+  "provision": ["export FOO=provision_step; echo $FOO"],
+  "commands": ["export FOO=commands_step; echo $FOO"],
+  "beforeClose": ["export FOO=beforeClose_step; echo $FOO"]
+}

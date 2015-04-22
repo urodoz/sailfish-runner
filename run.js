@@ -34,7 +34,7 @@ var configurationAction = require("sailfish/configuration/reader")(configuration
          *
          * The workers are created to run all git/build/docker actions
          */
-        var workers = workerFarm(require.resolve('./worker'), ['ping', "build"]);
+        var workers = workerFarm(require.resolve('./worker'), ['ping']);
         workers.ping(container.getParameter("token"), function(token) {
             container.get("logger").info("Worker is ready");
         });
