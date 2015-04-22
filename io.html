@@ -9,26 +9,29 @@
         <link rel="stylesheet" href="/css/runner.css">
 
         <!-- JS -->
+        <script src="/bower_components/webcomponentsjs/webcomponents.js"></script>
         <script src="/bower_components/jquery/dist/jquery.min.js"></script>
         <script src="/bower_components/materialize/dist/js/materialize.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/bower_components/lodash/lodash.min.js"></script>
-        <script src="/bower_components/webcomponentsjs/webcomponents.min.js">
-        </script>
 
         <!-- HTML IMPORTS -->
         <link rel="import" href="/bower_components/polymer/polymer.html">
+        <link rel="import" href="/bower_components/paper-toast/paper-toast.html">
         <link rel="import" href="/bower_components/font-roboto/roboto.html">
         <link rel="import" href="/sf/sf-navbar/sf-navbar.html">
+        <link rel="import" href="/sf/sf-build/sf-build.html">
     </head>
     <body class="runner-body" unresolved>
 
         <sf-navbar id="statusNavigation" barTitle="Sailfish Runner"></sf-navbar>
 
+        <paper-toast id="toast" text="" onclick="discardDraft(el)"></paper-toast>
+
         <div class="container">
             <div class="row">
 
-                <div class="col s12 m12">
+                <div id="main" class="col s12 m12">
 
                 </div>
 
@@ -36,16 +39,61 @@
         </div>
 
         <script>
-            var socket = io('http://127.0.0.1:13900/');
-            socket.on('status', function (data) {
-                document.querySelector("#statusNavigation").statusReport = data;
+
+            window.addEventListener('polymer-ready', function(e) {
+
+                function createBuildComponent(buildConfiguration) {
+                    var buildId = buildConfiguration.buildId,
+                        repository = buildConfiguration.repository;
+
+                    //Show output of the build
+                    var containerId = "C"+buildId.replace("-", ""),
+                            mainContainer = $("#main");
+
+                    //empty old content
+                    mainContainer.empty();
+
+                    var newGitPullComponent = document.createElement("sf-build");
+                    newGitPullComponent.repository = repository;
+                    newGitPullComponent.id = containerId;
+                    newGitPullComponent.buildId = buildId;
+                    mainContainer.append(newGitPullComponent);
+                };
+
+                var socket = io('http://127.0.0.1:13900/');
+                socket.on('status', function (data) {
+                    document.querySelector("#statusNavigation").statusReport = data;
+                });
+                socket.on("git_pull_start", function(data) {
+
+                    //Show message to the user
+                    var toast = document.querySelector("#toast"),
+                            repository = data.repository,
+                            buildId = data.buildId;
+
+                    toast.text = 'Git repository information requested - '+repository;
+                    toast.show();
+
+                    createBuildComponent(data);
+                });
+
+                socket.on("git_step", function(data) {
+                    var buildId = data.buildId,
+                        containerId = "C"+buildId.replace("-", "");
+                    if(0===$("#containerId").size()) {
+                        createBuildComponent(data);
+                    }
+
+                    var gitPullComp = document.querySelector("#"+containerId);
+                    gitPullComp.addPerformedStep(data.step);
+                });
+
+                socket.on("git_pull_end", function(data) {
+                    //TODO: React on git pull finished
+                });
+
             });
-            socket.on("git_pull_start", function(data) {
-                //TODO: React on git pull started
-            });
-            socket.on("git_pull_end", function(data) {
-                //TODO: React on git pull finished
-            });
+
         </script>
     </body>
 </html>

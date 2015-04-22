@@ -1,0 +1,81 @@
+
+<link rel="import" href="/../../bower_components/polymer/polymer.html">
+<link rel="import" href="/../../bower_components/core-icons/core-icons.html">
+<link rel="import" href="/../../bower_components/core-icons/device-icons.html">
+
+<polymer-element name="sf-build" attributes="repository buildId">
+
+    <template>
+
+        <link rel="stylesheet" href="/../../bower_components/materialize/dist/css/materialize.min.css">
+        <link rel="stylesheet" href="sf-build.css">
+
+        <div id="container">
+            <h5>Git information request</h5>
+            <p>
+                <core-icon icon="settings-applications"></core-icon>&nbsp;{{buildId}}<br>
+                <core-icon icon="label"></core-icon>&nbsp;{{repository}}
+            </p>
+            <hr/>
+
+            <ul id="taskList" class="collection">
+                <li>
+                    Creating workspace
+                    <span class="badge"><core-icon style="color:{{step1color}};" icon="{{step1icon}}"></core-icon></span>
+                </li>
+                <li>
+                    Read the branches and commits
+                    <span class="badge"><core-icon style="color:{{step2color}};" icon="{{step2icon}}"></core-icon></span>
+                </li>
+                <li>
+                    Report the server
+                    <span class="badge"><core-icon style="color:{{step3color}};" icon="{{step3icon}}"></core-icon></span>
+                </li>
+            </ul>
+        </div>
+
+    </template>
+    <script>
+
+      Polymer('sf-build', {
+
+          /**
+           * Steps performed
+           * - Available: [workspace-created, code-pulled, report-sent]
+           * @var {array}
+           */
+          steps: [],
+          repository: null,
+          buildId: null,
+
+          step1color: "yellow",
+          step2color: "yellow",
+          step3color: "yellow",
+
+          step1icon: "schedule",
+          step2icon: "schedule",
+          step3icon: "schedule",
+
+          addPerformedStep: function(step) {
+              this.steps.push(step);
+          },
+
+          stepsChanged: function() {
+              if(_.contains(this.steps, "workspace-created")) {
+                  this.step1color = "#43a047";
+                  this.step1icon = "done";
+              }
+              if(_.contains(this.steps, "code-pulled")) {
+                  this.step2color = "#43a047";
+                  this.step2icon = "done";
+              }
+              if(_.contains(this.steps, "report-sent")) {
+                  this.step3color = "#43a047";
+                  this.step3icon = "done";
+              }
+          }
+
+      });
+
+    </script>
+</polymer-element>
