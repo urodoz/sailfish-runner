@@ -1,0 +1,35 @@
+
+<link rel="import" href="/../../bower_components/polymer/polymer.html">
+
+<polymer-element name="sf-run" attributes="repository buildId log">
+
+    <template>
+
+        <link rel="stylesheet" href="/../../bower_components/materialize/dist/css/materialize.min.css">
+        <link rel="stylesheet" href="sf-build.css">
+        <link rel="stylesheet" href="sf-run.css">
+
+        <div id="container">
+            <h5>Build</h5>
+            <p>
+                <core-icon icon="settings-applications"></core-icon>&nbsp;{{buildId}}<br>
+                <core-icon icon="label"></core-icon>&nbsp;{{repository}}
+            </p>
+            <hr/>
+
+            <pre id="rawLog">
+                {{log}}
+            </pre>
+        </div>
+
+    </template>
+    <script>
+
+      Polymer('sf-run', {
+
+
+
+      });
+
+    </script>
+</polymer-element>

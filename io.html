@@ -14,6 +14,7 @@
         <script src="/bower_components/materialize/dist/js/materialize.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/bower_components/lodash/lodash.min.js"></script>
+        <script src="/js/base64decode.js"></script>
 
         <!-- HTML IMPORTS -->
         <link rel="import" href="/bower_components/polymer/polymer.html">
@@ -60,6 +61,24 @@
                     mainContainer.append(newGitPullComponent);
                 };
 
+                function createRunComponent(buildConfiguration) {
+                    var buildId = buildConfiguration.buildId,
+                            repository = buildConfiguration.repository;
+
+                    //Show output of the build
+                    var containerId = "C"+buildId.replace("-", ""),
+                            mainContainer = $("#main");
+
+                    //empty old content
+                    mainContainer.empty();
+
+                    var newGitPullComponent = document.createElement("sf-run");
+                    newGitPullComponent.repository = repository;
+                    newGitPullComponent.id = containerId;
+                    newGitPullComponent.buildId = buildId;
+                    mainContainer.append(newGitPullComponent);
+                };
+
                 var socket = io('http://127.0.0.1:13900/');
                 socket.on('status', function (data) {
                     document.querySelector("#statusNavigation").statusReport = data;
@@ -93,7 +112,28 @@
                 });
 
                 socket.on("build_log", function(data) {
-                   //TODO: React on build update information
+                    var buildId = data.buildId,
+                        containerId = "C"+buildId.replace("-", "");
+
+                    if(0===$("#containerId").size()) {
+                        createRunComponent(data);
+                    }
+
+                    var runComp = document.querySelector("#"+containerId);
+                    runComp.log = base64_decode(data.output);
+                });
+
+                socket.on("build_start", function(buildConfiguration) {
+
+                    //Show message to the user
+                    var toast = document.querySelector("#toast"),
+                        repository = buildConfiguration.repository,
+                        buildId = buildConfiguration.buildId;
+
+                    toast.text = 'Build started for '+repository;
+                    toast.show();
+
+                    createRunComponent(buildConfiguration);
                 });
 
             });
