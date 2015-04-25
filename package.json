@@ -1,7 +1,7 @@
 {
   "name": "sailfish-ci-runner",
   "description": "Simple CI Application - Runner",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Albert Lacarta <urodoz@gmail.com>",
   "dependencies": {
     "async": "^0.9.0",
